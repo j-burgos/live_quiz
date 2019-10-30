@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mix format --check-formatted
+mix credo
