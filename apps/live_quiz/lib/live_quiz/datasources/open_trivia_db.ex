@@ -1,4 +1,4 @@
-defmodule LiveQuiz.OpenTriviaDb do
+defmodule LiveQuiz.DataSources.OpenTriviaDb do
   @moduledoc """
     Provides getting trivia questions from OpenTriviaDB api
   """

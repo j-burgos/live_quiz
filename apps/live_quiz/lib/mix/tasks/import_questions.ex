@@ -11,7 +11,7 @@ defmodule Mix.Tasks.LiveQuiz.ImportQuestions do
   def run([amount]) do
     # This with_repo function is necessary to not start the whole application
     Ecto.Migrator.with_repo(LiveQuiz.Repo, fn _ ->
-      questions = LiveQuiz.OpenTriviaDb.questions(amount)
+      questions = LiveQuiz.DataSources.OpenTriviaDb.questions(amount)
 
       questions
       |> add_questions
@@ -36,7 +36,7 @@ defmodule Mix.Tasks.LiveQuiz.ImportQuestions do
       "incorrect_answers" => incorrect
     } = question
 
-    question_to_insert = %LiveQuiz.Question{
+    question_to_insert = %LiveQuiz.ControlPanel.Question{
       category: category,
       difficulty: difficulty,
       content: content
@@ -62,7 +62,11 @@ defmodule Mix.Tasks.LiveQuiz.ImportQuestions do
   end
 
   defp add_option(question, option_content, is_correct \\ false) do
-    option_to_insert = %LiveQuiz.Option{content: option_content, is_correct: is_correct}
+    option_to_insert = %LiveQuiz.ControlPanel.Option{
+      content: option_content,
+      is_correct: is_correct
+    }
+
     opt = Ecto.build_assoc(question, :options, option_to_insert)
     LiveQuiz.Repo.insert!(opt)
   end

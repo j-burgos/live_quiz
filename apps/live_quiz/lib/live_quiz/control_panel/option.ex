@@ -1,4 +1,4 @@
-defmodule LiveQuiz.Option do
+defmodule LiveQuiz.ControlPanel.Option do
   @moduledoc """
     Provides an Option model
     An Option belongs to a Question
@@ -9,7 +9,7 @@ defmodule LiveQuiz.Option do
   schema "options" do
     field :content, :string
     field :is_correct, :boolean
-    belongs_to :question, LiveQuiz.Question
+    belongs_to :question, LiveQuiz.ControlPanel.Question
 
     timestamps()
   end

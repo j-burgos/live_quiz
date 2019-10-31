@@ -1,4 +1,4 @@
-defmodule LiveQuiz.Question do
+defmodule LiveQuiz.ControlPanel.Question do
   @moduledoc """
     Provides a Question model
     A Model has many Options
@@ -10,7 +10,7 @@ defmodule LiveQuiz.Question do
     field :content, :string
     field :category, :string
     field :difficulty, :string
-    has_many :options, LiveQuiz.Option
+    has_many :options, LiveQuiz.ControlPanel.Option
 
     timestamps()
   end
