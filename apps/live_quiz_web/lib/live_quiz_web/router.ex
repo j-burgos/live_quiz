@@ -17,9 +17,13 @@ defmodule LiveQuizWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/admin", LiveQuizWeb do
+    pipe_through :browser
 
     # Admin panel
-    get "/admin", AdminController, :index
+    get "/", AdminController, :index
   end
 
   # Other scopes may use custom stacks.

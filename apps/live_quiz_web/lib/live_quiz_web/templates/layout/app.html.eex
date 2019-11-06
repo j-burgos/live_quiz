@@ -4,16 +4,23 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>LiveQuiz · Phoenix Framework</title>
+    <title>LiveQuiz</title>
+    <!-- Materialized Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
     <header>
       <section class="container">
-        <nav role="navigation">
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-          </ul>
+        <nav class="blue darken-3">
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">LiveQuiz</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
+              <li><%= link "Admin", to: Routes.admin_path(@conn, :index) %></li>
+            </ul>
+          </div>
         </nav>
       </section>
     </header>
@@ -22,6 +29,8 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
+    <!-- Materialized Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

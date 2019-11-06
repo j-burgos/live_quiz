@@ -1,0 +1,37 @@
+<ul class="pagination">
+  <%= if @page_number === 1 do %>
+  <li class="disabled">
+    <a><i class="material-icons">chevron_left</i></a>
+  </li>
+  <% else %>
+  <li>
+    <%= link to: Routes.admin_path(@conn, :index, page: @page_number - 1) do %>
+      <i class="material-icons">chevron_left</i>
+    <% end %>
+  </li>
+  <% end %>
+
+  <%= for page_num <- 1..@total_pages do %>
+    <%= if page_num === @page_number do %>
+      <li class="active blue darken-3">
+        <%= link to: Routes.admin_path(@conn, :index, page: page_num), do: page_num %>
+      </li>
+    <% else %>
+      <li class="waves-effect">
+        <%= link to: Routes.admin_path(@conn, :index, page: page_num), do: page_num %>
+      </li>
+    <% end %>
+  <% end %>
+
+  <%= if @page_number === @total_pages do %>
+  <li class="disabled">
+    <a><i class="material-icons">chevron_right</i></a>
+  </li>
+  <% else %>
+  <li class="waves-effect">
+    <%= link to: Routes.admin_path(@conn, :index, page: @page_number + 1) do %>
+      <i class="material-icons">chevron_right</i>
+    <% end %>
+  </li>
+  <% end %>
+</ul>

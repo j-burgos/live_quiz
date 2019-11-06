@@ -24,7 +24,7 @@ defmodule LiveQuiz.MixProject do
   def application do
     [
       mod: {LiveQuiz.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto]
     ]
   end
 
@@ -40,7 +40,8 @@ defmodule LiveQuiz.MixProject do
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
       {:tesla, "~> 1.2.0"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:scrivener_ecto, "~> 2.0"}
     ]
   end
 

@@ -8,6 +8,8 @@ defmodule LiveQuiz.ControlPanel do
 
   alias LiveQuiz.ControlPanel.Question
 
+  require Logger
+
   @doc """
   Returns the list of questions.
 
@@ -17,8 +19,24 @@ defmodule LiveQuiz.ControlPanel do
       [%Question{}, ...]
 
   """
-  def list_questions do
-    Repo.all(Question)
+  def list_questions(params) do
+    base_query = Question |> preload(:options)
+
+    query =
+      case params do
+        %{"search" => search} ->
+          base_query
+          |> where(
+            [q],
+            ilike(q.content, ^"%#{search}%") or ilike(q.category, ^"%#{search}%") or
+              ilike(q.difficulty, ^"%#{search}%")
+          )
+
+        _ ->
+          base_query
+      end
+
+    query |> Repo.paginate(params)
   end
 
   @doc """
@@ -35,7 +53,11 @@ defmodule LiveQuiz.ControlPanel do
       ** (Ecto.NoResultsError)
 
   """
-  def get_question!(id), do: Repo.get!(Question, id)
+  def get_question!(id) do
+    Question
+    |> Repo.get!(id)
+    |> Repo.preload(:options)
+  end
 
   @doc """
   Creates a question.
