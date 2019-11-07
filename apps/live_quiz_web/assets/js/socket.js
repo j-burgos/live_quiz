@@ -80,24 +80,31 @@ channel.on("game:question", (payload) => {
   console.group("Question received")
   console.log(payload)
   console.groupEnd()
-  const { question, options } = payload;
+  const { question: { id: questionId, content: questionText }, options } = payload;
   const questionModal = $('#question-modal')
+  const questionIdInput = questionModal.find('#question-id')
   const questionTextElem = questionModal.find('.description > .header')
-  questionTextElem.html(question)
+  questionIdInput.val(questionId)
+  questionTextElem.html(questionText)
   const buildOptionTemplate = ({ id, content }) => `
     <div class="ui basic segment padded">
-      <button id="${id}" class="ui fluid huge button blue">${content}</button>
+      <div id="${id}" class="ui fluid huge button">${content}</div>
     </div>
   `
   const optionsContent = options.map(buildOptionTemplate);
   const optionsElem = questionModal.find('.options')
+  $(document.body).off('click', '#question-modal .options .button')
+  optionsElem.empty()
   optionsElem.html(optionsContent)
   $(document.body).on('click', '#question-modal .options .button', (event) => {
-    const currentElem = $(event.currentTarget);
+    const currentElem = event.currentTarget
     const answerId = currentElem.id
-    const answer = currentElem.text()
-    questionModal.modal('hide')
-    channel.push("game:answer", { answerId, answer })
+    const questionId = $('#question-id').val()
+    console.group("answer")
+    console.log(questionId)
+    console.log(currentElem.id)
+    console.groupEnd()
+    channel.push("game:answer", { questionId, answerId })
   })
   questionModal
     .modal({ closable: false })
@@ -108,6 +115,17 @@ channel.on("game:result", (payload) => {
   console.group("Answer result")
   console.log(payload)
   console.groupEnd()
+  const { optionId, result } = payload
+  const animation = result ? 'bounce' : 'shake'
+  const colorClass = result ? 'positive' : 'negative'
+  const questionModal = $('#question-modal')
+  questionModal.find(`#${optionId}`).toggleClass(colorClass).transition({
+    animation,
+    duration: 1000,
+    onComplete: () => {
+      questionModal.modal('hide')
+    }
+  })
 })
 
 function broadcastQuestion(questionId) {

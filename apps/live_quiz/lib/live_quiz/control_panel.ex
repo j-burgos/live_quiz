@@ -7,6 +7,7 @@ defmodule LiveQuiz.ControlPanel do
   alias LiveQuiz.Repo
 
   alias LiveQuiz.ControlPanel.Question
+  alias LiveQuiz.ControlPanel.Option
 
   require Logger
 
@@ -122,5 +123,15 @@ defmodule LiveQuiz.ControlPanel do
   """
   def change_question(%Question{} = question) do
     Question.changeset(question, %{})
+  end
+
+  def correct?(question_id, option_id) do
+    question = get_question!(question_id)
+    found_option = question.options |> Enum.find(fn o -> o.id === option_id end)
+
+    case found_option do
+      nil -> false
+      found_option -> found_option.is_correct
+    end
   end
 end

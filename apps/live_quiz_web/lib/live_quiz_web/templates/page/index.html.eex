@@ -14,9 +14,9 @@
         <input id="chat-input" name="message" autocomplete="off" type="text">
       </div>
       <div class="two wide field">
-        <button class="ui fluid positive icon submit button">
+        <div class="ui positive fluid button">
           <i class="icon comment"></i> Send
-        </button>
+        </div>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@
   <div class="content">
     <div class="description">
       <h1 class="ui dividing center aligned header">{{ questionPlaceholder }}</h1>
+      <input id="question-id" type="hidden">
       <div class="options">
       </div>
     </div>

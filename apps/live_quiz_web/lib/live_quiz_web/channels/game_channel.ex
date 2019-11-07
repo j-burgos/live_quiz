@@ -18,7 +18,10 @@ defmodule LiveQuizWeb.GameChannel do
       |> Enum.map(fn o -> %{id: o.id, content: o.content} end)
 
     resp = %{
-      question: question.content,
+      question: %{
+        id: question.id,
+        content: question.content
+      },
       options: options
     }
 
@@ -26,8 +29,10 @@ defmodule LiveQuizWeb.GameChannel do
     {:noreply, socket}
   end
 
-  def handle_in("game:answer", _params, socket) do
-    push(socket, "game:result", %{result: false})
+  def handle_in("game:answer", %{"questionId" => question_id, "answerId" => answer_id}, socket) do
+    option_id = String.to_integer(answer_id)
+    result = LiveQuiz.ControlPanel.correct?(question_id, option_id)
+    push(socket, "game:result", %{"optionId" => option_id, "result" => result})
     {:noreply, socket}
   end
 
