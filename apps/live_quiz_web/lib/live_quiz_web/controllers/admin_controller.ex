@@ -1,8 +1,9 @@
 defmodule LiveQuizWeb.AdminController do
   use LiveQuizWeb, :controller
-  alias LiveQuiz.Repo
 
   require Logger
+
+  plug :put_layout, "admin.html"
 
   def index(conn, params) do
     page = LiveQuiz.ControlPanel.list_questions(params)
