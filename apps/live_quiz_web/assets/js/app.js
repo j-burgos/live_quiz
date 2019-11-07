@@ -21,8 +21,6 @@ $('#chat-form').submit(function (event) {
   const message = messageInput.val()
   if(message.length) {
     sendChatMessage(message)
-    const chatboxElem = $("#chatbox")
-    chatboxElem.animate({ scrollTop: chatboxElem.height() }, 500);
     messageInput.val("")
   }
   event.preventDefault();

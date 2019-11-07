@@ -71,7 +71,9 @@ channel.on("chat:message", (payload) => {
       <div class="ui compact message">${messageText}</div>
     </div>
   `
-  $('#chatbox').append(buildChatMessage(message));
+  const chatboxElem = $("#chatbox")
+  chatboxElem.append(buildChatMessage(message));
+  chatboxElem.animate({ scrollTop: chatboxElem.prop("scrollHeight") }, 500);
 })
 
 channel.on("game:question", (payload) => {
