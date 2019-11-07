@@ -1,8 +1,9 @@
 defmodule LiveQuizWeb.UserSocket do
   use Phoenix.Socket
+  require Logger
 
   ## Channels
-  # channel "room:*", LiveQuizWeb.RoomChannel
+  channel "game:*", LiveQuizWeb.GameChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
