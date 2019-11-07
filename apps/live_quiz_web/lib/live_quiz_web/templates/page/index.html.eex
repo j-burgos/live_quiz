@@ -1,35 +1,33 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
-</section>
+<div class="ui placeholder segment">
+  <div class="ui active inverted dimmer">
+    <div class="ui massive indeterminate text loader">Waiting for questions...</div>
+  </div>
+</div>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<div class="ui segment padded">
+  <h2 class="header">Chat</h2>
+  <div id="chatbox" class="ui relaxed large list">
+  </div>
+  <form id="chat-form" class="ui form">
+    <div class="fields">
+      <div class="fourteen wide field">
+        <input id="chat-input" name="message" autocomplete="off" type="text">
+      </div>
+      <div class="two wide field">
+        <button class="ui fluid positive icon submit button">
+          <i class="icon comment"></i> Send
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="question-modal" class="ui modal">
+  <div class="content">
+    <div class="description">
+      <h1 class="ui dividing center aligned header">{{ questionPlaceholder }}</h1>
+      <div class="options">
+      </div>
+    </div>
+  </div>
+</div>

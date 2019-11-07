@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>LiveQuiz</title>
+    <title>LiveQuiz Admin</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
@@ -12,6 +12,8 @@
     <header class="ui segment inverted blue secondary pointing huge menu">
       <nav class="ui container">
         <a class="item header active">LiveQuiz</a>
+        <%= link "Game", to: Routes.page_path(@conn, :index), class: "item" %>
+        <%= link "Admin", to: Routes.admin_path(@conn, :index), class: "item" %>
       </nav>
     </header>
     <main role="main" class="ui container">
@@ -21,6 +23,6 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/admin.js") %>"></script>
   </body>
 </html>

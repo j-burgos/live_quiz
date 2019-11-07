@@ -1,3 +1,16 @@
 /* This file is for your main application css. */
 
-@import "./phoenix.css";
+/* @import "./phoenix.css"; */
+
+#question-modal .content .description .header {
+  padding: 64px;
+}
+
+#question-modal .content .options {
+  padding: 16px;
+}
+
+#chatbox {
+  height: 41vh;
+  overflow-y: scroll;
+}

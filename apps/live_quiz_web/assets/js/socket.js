@@ -55,9 +55,71 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("game:lobby", {})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
+channel.on("chat:message", (payload) => {
+  console.group("Chat message")
+  console.log(payload)
+  console.groupEnd()
+  const { message } = payload;
+  const buildChatMessage = (messageText) => `
+    <div class="item">
+      <div class="ui compact message">${messageText}</div>
+    </div>
+  `
+  $('#chatbox').append(buildChatMessage(message));
+})
+
+channel.on("game:question", (payload) => {
+  console.group("Question received")
+  console.log(payload)
+  console.groupEnd()
+  const { question, options } = payload;
+  const questionModal = $('#question-modal')
+  const questionTextElem = questionModal.find('.description > .header')
+  questionTextElem.html(question)
+  const buildOptionTemplate = ({ id, content }) => `
+    <div class="ui basic segment padded">
+      <button id="${id}" class="ui fluid huge button blue">${content}</button>
+    </div>
+  `
+  const optionsContent = options.map(buildOptionTemplate);
+  const optionsElem = questionModal.find('.options')
+  optionsElem.html(optionsContent)
+  $(document.body).on('click', '#question-modal .options .button', (event) => {
+    const currentElem = $(event.currentTarget);
+    const answerId = currentElem.id
+    const answer = currentElem.text()
+    questionModal.modal('hide')
+    channel.push("game:answer", { answerId, answer })
+  })
+  questionModal
+    .modal({ closable: false })
+    .modal('show')
+})
+
+channel.on("game:result", (payload) => {
+  console.group("Answer result")
+  console.log(payload)
+  console.groupEnd()
+})
+
+function broadcastQuestion(questionId) {
+  channel.push("game:question:broadcast", { questionId })
+}
+
+function sendChatMessage(message) {
+  channel.push("chat:message", { message })
+}
+
+export {
+  broadcastQuestion,
+  sendChatMessage
+}
+
 export default socket
+

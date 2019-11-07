@@ -1,45 +1,59 @@
-<div class="row">
-  <%= form_for @conn, Routes.admin_path(@conn, :index), [method: :get, class: "col s12"], fn f -> %>
-    <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">search</i>
-        <%= text_input f, :search%>
-        <label for="icon_prefix">Search</label>
-      </div>
-    </div>
+
+<div class="ui search">
+  <%= form_for @conn, Routes.admin_path(@conn, :index), fn f -> %>
+  <div class="ui icon input">
+    <%= text_input f, :search, class: "prompt", placeholder: "Search..." %>
+    <i class="search icon"></i>
+  </div>
+  <div class="results"></div>
   <% end %>
 </div>
+<div class="ui text menu">
+  <div class="header item">Sort By</div>
+  <a class="active item">
+    Difficulty
+  </a>
+  <a class="item">
+    Category
+  </a>
+</div>
 
-<ul class="collapsible popout">
-<%= for question <- @questions do %>
-  <% difficulty_rank =
+<div class="ui styled accordion fluid">
+  <%= for question <- @questions do %>
+  <% difficulty_mapping =
     case question.difficulty do
-      "hard" -> 3
-      "medium" -> 2
-      "easy" -> 1
+      "hard" -> %{rank: 3, color: "red"}
+      "medium" -> %{rank: 2, color: "yellow"}
+      "easy" -> %{rank: 1, color: "olive"}
     end %>
-  <li>
-    <div class="collapsible-header">
+    <div class="title">
+      <i class="dropdown icon"></i>
       <%= for i <- 1..3 do %>
-        <i class="material-icons orange-text text-darken-1">
-          <%= if difficulty_rank >= i, do: "star", else: "star_border" %>
+        <i class="icon <%= difficulty_mapping.color %>
+          <%= if difficulty_mapping.rank >= i, do: "star", else: "star outline" %> ">
         </i>
       <% end %>
       <%= raw question.content %>
     </div>
-    <div class="collapsible-body">
-      Difficulty: <%= question.difficulty %>
-      <div class="divider"></div>
-      <ul>
+    <div class="content">
+      <button id="<%= question.id %>" class="ui right floated positive button question">
+        <i class="icon rss"></i> Broadcast
+      </button>
+      <div>Difficulty: <%= question.difficulty %></div>
+      <div>Category: <%= question.category %></div>
+      <div class="ui section divider"></div>
+      <div class="ui list relaxed">
         <%= for option <- question.options do %>
-          <li>
-            <%= raw option.content %> <%= if option.is_correct, do: "✓", else: "x"  %>
-          </li>
+          <div class="item">
+            <i class="<%= if option.is_correct, do: "check circle green", else: "times circle red" %> icon"></i>
+            <div class="content">
+              <%= raw option.content %>
+            </div>
+          </div>
         <% end %>
-      </ul>
+      </div>
     </div>
-  </li>
-<% end %>
-</ul>
+  <% end %>
+</div>
 
 <%= render LiveQuizWeb.SharedView, "pagination.html", assigns %>
