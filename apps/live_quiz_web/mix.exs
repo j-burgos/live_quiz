@@ -46,7 +46,10 @@ defmodule LiveQuizWeb.MixProject do
       {:gettext, "~> 0.11"},
       {:live_quiz, in_umbrella: true},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:guardian, "~> 2.0"},
+      {:comeonin, "~> 4.0"},
+      {:argon2_elixir, "~> 1.2"}
     ]
   end
 

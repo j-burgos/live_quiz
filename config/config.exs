@@ -32,6 +32,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Guardian
+config :live_quiz_web, LiveQuizWeb.Guardian,
+  issuer: "live_quiz_web",
+  secret_key: "2CVX/FE8T5Rf7GNehJaFdmEMN4WOiMNio7Fy3G6LCZLVEHG32KtFGQeTj9EFM0LV"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
