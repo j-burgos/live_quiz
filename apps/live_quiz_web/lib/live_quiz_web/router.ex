@@ -17,6 +17,8 @@ defmodule LiveQuizWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/users", UserController, only: [:show, :new, :create]
+    resources "/session", SessionController, only: [:new, :create, :delete]
   end
 
   scope "/admin", LiveQuizWeb do
@@ -24,6 +26,7 @@ defmodule LiveQuizWeb.Router do
 
     # Admin panel
     get "/", AdminController, :index
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.

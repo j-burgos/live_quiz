@@ -11,7 +11,11 @@
   <body>
     <header class="ui segment inverted blue secondary pointing huge menu">
       <nav class="ui container">
-        <a class="item header active">LiveQuiz</a>
+        <%= link "LiveQuiz", to: Routes.page_path(@conn, :index), class: "item header active" %>
+        <div class="right menu">
+          <%= link "Register", to: Routes.user_path(@conn, :new), class: "item" %>
+          <%= link "Log In", to: Routes.session_path(@conn, :new), class: "item" %>
+        </div>
       </nav>
     </header>
     <main role="main" class="ui container">
